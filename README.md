@@ -125,70 +125,74 @@ EXCHANGE_API_KEY=your_api_key_here
 \`\`\`
 currency-converter/
 ├── src/
-│   ├── app/
-│   │   ├── api/
-│   │   │   ├── rates/          # Latest exchange rates endpoint
-│   │   │   └── historical/     # Historical rates endpoint
-│   │   ├── page.tsx            # Main page
-│   │   ├── layout.tsx          # Root layout
-│   │   └── globals.css         # Global styles
-│   ├── components/
-│   │   ├── CurrencyConverter.tsx
-│   │   ├── CurrencyInput.tsx
-│   │   ├── ConversionCard.tsx
-│   │   └── ChartModal.tsx      # Historical chart (bonus)
-│   ├── lib/
-│   │   ├── constants.ts        # Currency definitions
-│   │   ├── exchangeRateService.ts
-│   │   └── utils.ts            # Helper functions
-│   └── types/
-│       └── currency.ts         # TypeScript types
-├── public/                     # Static assets
-├── Dockerfile                  # Docker configuration
-├── docker-compose.yml          # Docker Compose setup
-├── .env.example               # Environment variable template
-└── README.md                  # This file
+│ ├── app/
+│ │ ├── api/
+│ │ │ ├── rates/ # Latest exchange rates endpoint
+│ │ │ └── historical/ # Historical rates endpoint
+│ │ ├── page.tsx # Main page
+│ │ ├── layout.tsx # Root layout
+│ │ └── globals.css # Global styles
+│ ├── components/
+│ │ ├── CurrencyConverter.tsx
+│ │ ├── CurrencyInput.tsx
+│ │ ├── ConversionCard.tsx
+│ │ └── ChartModal.tsx # Historical chart (bonus)
+│ ├── lib/
+│ │ ├── constants.ts # Currency definitions
+│ │ ├── exchangeRateService.ts
+│ │ └── utils.ts # Helper functions
+│ └── types/
+│ └── currency.ts # TypeScript types
+├── public/ # Static assets
+├── Dockerfile # Docker configuration
+├── docker-compose.yml # Docker Compose setup
+├── .env.example # Environment variable template
+└── README.md # This file
 \`\`\`
 
 ## API Endpoints
 
 ### GET /api/rates
+
 Returns the latest exchange rates for all currencies.
 
 **Response:**
 \`\`\`json
 {
-  "base": "USD",
-  "rates": {
-    "AUD": 1.52,
-    "EUR": 0.92,
-    ...
-  },
-  "timestamp": 1234567890
+"base": "USD",
+"rates": {
+"AUD": 1.52,
+"EUR": 0.92,
+...
+},
+"timestamp": 1234567890
 }
 \`\`\`
 
 ### GET /api/historical?currency=EUR
+
 Returns historical exchange rates for the past 14 days for a specific currency.
 
 **Parameters:**
+
 - \`currency\` (required): Target currency code (e.g., EUR, GBP, USD)
 
 **Response:**
 \`\`\`json
 {
-  "currency": "EUR",
-  "data": [
-    { "date": "2024-11-10", "rate": 0.92 },
-    { "date": "2024-11-11", "rate": 0.93 },
-    ...
-  ]
+"currency": "EUR",
+"data": [
+{ "date": "2024-11-10", "rate": 0.92 },
+{ "date": "2024-11-11", "rate": 0.93 },
+...
+]
 }
 \`\`\`
 
 ## Testing
 
 ### Manual Testing
+
 1. Enter different amounts and verify conversions update correctly
 2. Click refresh button to fetch new rates
 3. Click on any currency card to view historical chart
@@ -196,40 +200,50 @@ Returns historical exchange rates for the past 14 days for a specific currency.
 5. Test error handling by temporarily using invalid API key
 
 ### API Testing
+
 \`\`\`bash
+
 # Test latest rates
+
 curl http://localhost:3000/api/rates
 
 # Test historical rates
+
 curl http://localhost:3000/api/historical?currency=EUR
 \`\`\`
 
 ## Troubleshooting
 
 ### Issue: "API key not configured" error
+
 **Solution**: Ensure \`.env.local\` or environment variable is set correctly with your OpenExchangeRates API key.
 
 ### Issue: Docker container fails to start
-**Solution**: 
+
+**Solution**:
+
 1. Check if port 3000 is already in use: \`lsof -i :3000\`
 2. Verify API key is passed correctly
 3. Check Docker logs: \`docker logs <container_id>\`
 
 ### Issue: Rates not updating
-**Solution**: 
+
+**Solution**:
+
 1. Verify your API key is valid at openexchangerates.org
 2. Check API rate limits (free tier: 1,000 requests/month)
 3. Check browser console for errors
 
 ### Issue: Historical chart not loading
+
 **Solution**: Historical data requires multiple API calls. Ensure you haven't exceeded your API rate limit.
 
 ## Author
 
-Rajiv Khushiram 
-
+Rajiv Khushiram
 
 ## Step 8: Test the Docker build
+
 ```bash
 # Build the image
 docker build -t currency-converter .
@@ -244,6 +258,7 @@ docker-compose up --build
 ---
 
 ## Step 9: Final commit
+
 ```bash
 git add .
 git commit -m "Add Docker configuration and comprehensive README"
@@ -252,6 +267,7 @@ git commit -m "Add Docker configuration and comprehensive README"
 ---
 
 ## Step 10: Create the submission package
+
 ```bash
 # Create a clean build
 docker build -t currency-converter .
@@ -259,3 +275,29 @@ docker build -t currency-converter .
 # Test it works
 docker run -p 3000:3000 -e EXCHANGE_API_KEY=your_key currency-converter
 ```
+
+## Step 11: Testing
+
+### Test Coverage
+
+This application includes test coverage.
+
+### Run Tests
+
+\`\`\`bash
+
+# Run all tests
+
+npm test
+
+# Run tests in watch mode
+
+npm run test:watch
+
+# Generate coverage report
+
+npm run test:coverage
+\`\`\`
+
+- ✅ Unit tests for utility functions
+- ✅ Service layer tests with mocked APIs
