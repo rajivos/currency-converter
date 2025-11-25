@@ -13,7 +13,7 @@ export class ExchangeRateService {
 
   async getLatestRates(): Promise<ExchangeRates> {
     const response = await fetch(
-      `${API_BASE}/latest.json?app_id=${this.apiKey}&base=${DEFAULT_CURRENCY}`
+      `${API_BASE}/latest.json?app_id=${this.apiKey}`
     );
 
     if (!response.ok) {
